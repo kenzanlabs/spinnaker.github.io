@@ -11,10 +11,10 @@ lang: en
 # Getting started
 
 These instructions quickly get Spinnaker up and running on an Amazon
-Web Services (AWS) EC2 or Google Compute Engine virtual machine
+Web Services (AWS) EC2 or Google Compute Engine (GCE) virtual machine
 (VM) or local machine, then walk you through the steps of setting up
 and using Spinnaker to deploy to and manage clusters on AWS and/or
-Google Cloud Platform.
+GCE.
 
 You will go through the following steps:
 
@@ -37,9 +37,9 @@ UI.
 ## Step 1: Set up your target deployment environment
 
 You need to setup your target deployment environment, which is an AWS
-or Google Cloud Platform project that will house clusters that are deployed to and
+or GCP project that will house clusters that are deployed to and
 managed by Spinnaker. You can choose to setup only an [AWS
-environment](#aws-setup), a [Google Cloud Platform
+environment](#aws-setup), a [GCP
 environment](#google-cloud-platform-setup), or both. Please
 follow the appropriate instructions below to get your target
 deployment environment(s) setup.
@@ -113,8 +113,8 @@ role.
 
 ### Google Cloud Platform Setup
 
-If you'd like to have Spinnaker deploy to and manage clusters on Google Cloud Platform,
-you'll need to have a Google Cloud Platform project setup. If you've already got one,
+If you'd like to have Spinnaker deploy to and manage clusters on GCP,
+you'll need to have a GCP project setup. If you've already got one,
 please skip to the next step. Otherwise, please follow the
 instructions below.
 
@@ -229,7 +229,7 @@ It will take several minutes to install and configure Spinnaker along with
 all of its dependencies. Once the install is complete, you will use your
 web browser to interact with Spinnaker.  If you are running Spinnaker on AWS,
 point your browser at [http://localhost:8081](http://localhost:8081). Or, if
-you are running Spinnaker on Google Cloud Platform, point your browser at
+you are running Spinnaker on GCP, point your browser at
 [http://localhost:9000](http://localhost:9000).
 
 ## Step 4. Configure example pipeline
@@ -269,7 +269,7 @@ security group.
   * Click **Add new Security Group Rule**.
   * Click **default** on the **Security Group** dropdown.
   * Change **Start Port** and **End Port** to <code>80</code>.
-1. If running on Google Cloud Platform
+1. If running on GCP
   * Click **Add New Source CIDR** and use the default
     <code>0.0.0.0/0</code> value for the **Source Range** field.
   * Click **Add New Protocol and Port Range**. Use the default
@@ -289,7 +289,7 @@ Next, you'll create a load balancer in Spinnaker.
 1. If running on AWS
   * Select **example-test** from the **Security Groups** dropdown.
   * Hit **Next**, then **Create**.
-1. If running on Google Cloud Platform
+1. If running on GCP
   * Unselect the **Enable health check?** checkbox.
 1. Click the **Create** button.
 
@@ -342,10 +342,10 @@ for the **Stack** field.
   * Click on the **Micro Utility** button to set the **Instance
     Profile**, then click **Next**.
   * Select the **Medium: m3** size, then click **Next**.
-1. If running on Google Cloud Platform
+1. If running on GCP
   * Click on the **Micro Utility** button to set the **Instance
     Profile**, then click **Next**.
-  * If running on Google Cloud Platform, select the **Micro** size, then click **Next**.
+  * If running on GCP, select the **Micro** size, then click **Next**.
 1. Input <code>2</code> for the **Number of Instances** field, then click the
   **Add** button.
 1. Save the pipeline configuration by clicking the **Save Changes**
