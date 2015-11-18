@@ -102,7 +102,7 @@ We will now publish our (currently empty) repo and setup nginx to host it on por
 ```
 # ./aptly publish repo -architectures="amd64" -component=main -distribution=trusty -skip-signing=true hello
 ```
-###Setup Nginx to serve deb repo
+###Setup Nginx to serve aptly deb repo
 Install and configure nginx
 
 ```
