@@ -8,12 +8,10 @@ Below is a diagram of the workflow we will setup.
 
 ##Setup Jenkins
 
-Jenkins is a powerful continuous integration server that allows us to several important things:
+Jenkins is a powerful continuous integration server that allows us to do several important things:
 
 * Poll our Github repository for changes so Spinnaker knows when to run a pipeline.
 * Compile and build our example application into .deb package so Spinnaker can bake it on an image. Spinnaker expects all applications to be deployed as deb packages.
-* Publish our application .deb to a our repository (see below)
-* Hosts a private deb repository. This allows Spinnaker to `apt-get install` our application when the image is baked.
 
 ###Installing Jenkins
 
@@ -38,20 +36,57 @@ Visit port :8080 on your instance and you should see Jenkins startup and present
 
 ###Enable Jenkins API
 
-Spinnaker communicates with Jenkins by using it's REST API. However the API is not enabled by default. To enable it we first must enable global security (which is a good idea anyway). Click "Manage Jenkins" then "Configure Global Security". Under Access Control check "Jenkins own database" and "allow users to sign up". Under authorization check "Logged-in users can do anything" and save. 
+Spinnaker communicates with Jenkins by using it's REST API. However the API is not enabled by default. To enable it we first must enable global security (which is a good idea anyway). Click "Manage Jenkins" then "Configure Global Security". Under Access Control check "Jenkins own database" and "allow users to sign up". Under authorization check "Logged-in users can do anything" and save.
 
-![jenkins1](jenkins1.png) 
+![jenkins1](jenkins1.png)
 
 You will now be presented with a login screen. Click the "Create an account" link to register. Take note of your username and password, Spinnaker will need them later. Now you can turn off allowing users to register as you can add them manually from the control panel. The Jenkins API is now enabled.
 
-###Setup dep repo (Aptly)
+###Setup deb repo
 
-[Aptly](http://www.aptly.info/) is a tool that easily allows us to manage and publish the packages that Jenkins will build. After we install and configure the tool, nginx will host the repository on our jenkins server so it can be consumed during the bake process.
+There are several options you can use to setup your private deb repo. This involves leveraging a tool to create the file structure and format for your .deb packages and serving them on the internet so they can be installed.
+
+#####deb-s3
+
+[deb-s3](https://github.com/krobertson/deb-s3) is a ruby gem that allows you to create a publish your packages directly to an s3 bucket. The nice part about this is that you do not have to concern yourself with setting up ports or configuring a web server. S3 handles everything for us.
+
+First create a new s3 bucket to hold your packages, take note of the name and region.
+
+Next edit the properties of your bucket and turn on static website hosting.
+
+![s3](s3.png)
+
+We will now install deb-s3 on our Jenkins server.
+
+First install Ruby and bundler (here we will use rvm):
+
+```
+sudo apt-get update
+sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev python-software-properties libffi-dev
+curl -L https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+rvm install 2.2.3
+rvm use 2.2.3 --default
+ruby -v
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+gem install bundler
+```
+
+now install the deb-s3 gem
+```
+gem install deb-s3
+```
+The address of your repo will now be `http://BUCKET-NAME.s3-website-REGION-NAME.amazonaws.com trusty main`
+
+
+####Aptly
+
+[Aptly](http://www.aptly.info/) is a tool that easily allows us to manage and publish the packages to the local filesystem. After we install and configure the tool, nginx will host the repository on our jenkins server so it can be consumed during the bake process. Since nginx will run on port 9999 it is important that this port on your Jenkins server will be accessible from the internet.
 
 The following will install aptly to the jenkins user home directory so our jobs can easily use it. We will also create our repo so the jobs can easily add packages.
 
 ```
-$ mkdir /opt/aptly && cd /opt/aptly
+$ cd ~
 $ wget https://dl.bintray.com/smira/aptly/0.9.5/debian-squeeze-x64/aptly
 $ chmod +x aptly
 ```
@@ -59,9 +94,6 @@ $ chmod +x aptly
 Create our repo named "hello"
 
 ```
-deb-s3 upload --bucket spinnaker-debs hello-karyon-rxnetty_1-1_all.deb
-deb-s3 upload --bucket spinnaker-debs --arch amd64 --preserve-versions true  hello-karyon-rxnetty_1-1_all.deb
-deb-s3 upload --bucket spinnaker-debs --arch amd64 --preserve-versions true *.deb
 $ ./aptly repo create hello
 ```
 
@@ -93,9 +125,9 @@ server {
 }
 ```
 
-###Setup dep repo (debs3)
-
 Start nginx `service nginx start`
+
+the address of the repo will be `http://JENKINS-SERVER:9999 trusty main`
 
 ###Fork example application
 
@@ -109,12 +141,24 @@ We will now setup our 4 jenkins jobs for spinnaker to use.
 
 The first is a simple job that polls our git repo for changes. Spinnaker has no knowledge of our repo location, so it needs a way to trigger a pipeline automatically when code is pushed. (A pipeline is a set of actions that handle the application delivery) Spinnaker will poll our polling job and kick off a pipeline when it detects a fresh run.
 
-* Ensure the Jenkins git plugin is enabled and create a new Freesyle Project named "Example Poll Github".
+* Ensure the Jenkins git plugin is enabled and create a new Freesyle Project named "Hello Poll".
+* Add your app fork git address.
+* Under build triggers check "Poll SCM" and enter `* * * * *` for Jenkins to poll once a minute. You can now save the job.
 
 ![diagram](jenkins2.png)
 
-* Add your app fork git address.
-* Under build triggers check "Poll SCM" and enter "* * * * *" for Jenkins to poll once a minute. You can now save the job.
+2. Build Job
+
+This job will be responsible for building a publishing our package, along with passing the package and version name to Spinnaker.
+
+* Create a new freestyle job named "Hello Build".
+* Add the git url for your application fork
+* Add a build step for "execute shell"
+* In the textbox execute the packDeb task `./gradlew packDeb`
+* If you used deb-s3 for your repo, add the following: `deb-s3 upload --bucket BUCKETNAME --arch amd64 --codename trusty --preserve-versions true build/distributions/*.deb`
+* If you used aptly for your repo, add the following: `~/aptly repo add hello build/distributions/*.deb && ./aptly publish repo -architectures="amd64" -component=main -distribution=trusty -skip-signing=true hello`
+
+![diagram](build.png)
 
 ##Configure Spinnaker
 
@@ -127,7 +171,7 @@ The ports needed:
 * 8087: Image bakery (Rosco)
 
 ```
-ssh -i yourkey.pem -L 9000:127.0.0.1:9000 8084:127.0.0.1:8084 8087:127.0.0.1:8087 ubuntu@instanceip
+ssh -i yourkey.pem -L 9000:127.0.0.1:9000 -L 8084:127.0.0.1:8084 -L 8087:127.0.0.1:8087 ubuntu@instanceip
 ```
 
 Spinnaker will be accessible on [http://localhost:9000](http://localhost:9000).
@@ -136,7 +180,7 @@ Spinnaker will be accessible on [http://localhost:9000](http://localhost:9000).
 
 Before we can begin setting up our workflow, we need to edit the Spinnaker configuration to allow it to communicate with our Jenkins server.
 
-Begin by shutting down Spinnaker. Spinnaker configuration is stored in memory so we need to reload it everytime we make a change. You can now edit the master configuration file:
+Begin by shutting down Spinnaker. Spinnaker configuration is stored in memory so we need to reload it every time we make a change. You can now edit the master configuration file:
 
 ```
 # stop spinnaker
@@ -168,9 +212,31 @@ The last configuration step is to add our deb repository address to the Rosco co
 ```
 # vim /opt/rosco/config/rosco.yml
 ```
-Add your jenkins server address and repo port to the debianRepository key
+Add your repo address from above. For example if we used deb-s3:
 
 ```
-debianRepository: http://jenkins-server:9999
+debianRepository: http://BUCKET-NAME.s3-website-REGION-NAME.amazonaws.com trusty main
 ```
 We can now start Spinnaker and start configuring our workflow. `# start spinnaker`
+
+##Create Spinnaker application
+
+The concept of an application allows us to group our resources and pipelines in a logical way. This makes it easy to manage our app in a single place instead of searching for items buried in menus.
+
+* Visit http://localhost:9000 and click the actions button -> create application.
+* Fill out the information, naming it "hello" and click save. We are now ready to add resources to our app.
+
+![create](create.png)
+
+
+
+* Create security group
+* Create load balancer
+
+##Setup Spinnaker Pipeline
+
+Our pipeline is triggered by polling our Jenkins server to see if our code has updated. We then create two stages
+
+* Run jenkins job to build our application
+* Perform bake on build artifact (deb package)
+* Deploy our baked image to cluster
