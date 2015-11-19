@@ -219,7 +219,7 @@ debianRepository: http://BUCKET-NAME.s3-website-REGION-NAME.amazonaws.com trusty
 ```
 We can now start Spinnaker and start configuring our workflow. `# start spinnaker`
 
-##Create Spinnaker application
+##Create Spinnaker application and resources
 
 The concept of an application allows us to group our resources and pipelines in a logical way. This makes it easy to manage our app in a single place instead of searching for items buried in menus.
 
@@ -228,15 +228,71 @@ The concept of an application allows us to group our resources and pipelines in 
 
 ![create](create.png)
 
+###Create security group
 
+Now we will create security group to allow access to our application. Spinnaker only allows you to attach ingress sources based on another security group, so we first must create a base security group via the aws console to allow traffic on port 8080.
 
-* Create security group
-* Create load balancer
+![group1](group1.png)
+
+Now we can use this group as an inbound rule for our application security group. Click the security groups tab and add a new group.
+
+![group1](group2.png)
+
+Select our group as ingress source
+
+![group1](group3.png)
+
+###Create load balancer
+
+The load balancer will be the entry-point to our application scaling group. Click the load balancers tab and add it.
+
+![group1](group4.png)
 
 ##Setup Spinnaker Pipeline
 
+We now have the necessary resources to begin pipeline creation. A pipeline is a group of actions that handle the complete lifecycle of our deployment. It is also a great centralized place to monitor the status of each stage instead of hopping between jenkins or the aws console.
+
 Our pipeline is triggered by polling our Jenkins server to see if our code has updated. We then create two stages
 
-* Run jenkins job to build our application
-* Perform bake on build artifact (deb package)
-* Deploy our baked image to cluster
+Click the pipelines tab and add a new pipeline.
+
+###Pipeline trigger
+
+Add a trigger and select "jenkins job" then we can select our jenkins server and choose the "hello poll" job. Spinnaker will poll jenkins for a successful run of this job. We know that if it ran then there is new code to deploy from github
+
+![group1](pipe1.png)
+
+###Build and package stage
+
+The first stage in our pipeline will be to build and package our app. This also published our deb to our repository for baking. Choose Jenkins for type and select our "hello build" job.
+
+![group1](pipe2.png)
+
+###Bake stage
+
+The next stage will bake our application. "Baking" refers to booting up an instance, installing our application package, and saving the os image for launching. All of this is handled by [packer](http://packer.io). Because our build stage returns the name of our deb artifact and knows our repo address, we simply need to select the region(s) and add our application package name. We can also take advantage of the async features of spinnaker and do a multi-region bake.
+
+
+###Deploy stage
+
+Spinnaker will automatically pass our baked ami id to the bake stage. This is where we set up our ASG to be deployed to a cluster.
+
+![group1](pipe4.png)
+
+Click "add server group" and configure the ASG
+
+![group1](pipe5.png)
+
+Our app is fairly lightweight so t2.micro will be fine for instance type.
+
+![group1](pipe6.png)
+
+Choose two instances so we can be sure they our load balanced correctly. Our application will display the instance id so we can easily confirm this.
+
+![group1](pipe7.png)
+
+##Test workflow
+
+We are now ready to test our workflow! Make a commit to your application fork and push to github. You should first see jenkins run the polling job, then spinnaker kickoff the pipeline. Look at the pipeline screen and click each stage as it runs to see more details. Eventually your application will make it all the way through the pipeline and be deployed. Victory!
+
+![group1](pipe8.png)
