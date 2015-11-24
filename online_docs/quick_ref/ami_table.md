@@ -11,15 +11,14 @@ lang: en
 # AMI ID Table
 
 
-| Region           | Name                       | Ubuntu Version   | Instance Type   | AMI ID                                                                                               |
-| ---------------- | -------------------------- | ---------------- | --------------- | --------------                                                                                       |
-| us-east-1        | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-3acb8e50](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-3acb8e50)      |
-| us-west-1        | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-a1ed83c1](https://console.aws.amazon.com/ec2/home?region=us-west-1#launchAmi=ami-a1ed83c1)      |
-| us-west-2        | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-ef65758e](https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-ef65758e)      |
-| eu-west-1        | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-7537ed06](https://console.aws.amazon.com/ec2/home?region=eu-west-1#launchAmi=ami-7537ed06)      |
-| eu-central-1     | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-18253774](https://console.aws.amazon.com/ec2/home?region=eu-central-1#launchAmi=ami-18253774)   |
-| ap-southeast-1   | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-899a5bea](https://console.aws.amazon.com/ec2/home?region=ap-southeast-1#launchAmi=ami-899a5bea) |
-| ap-southeast-2   | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-f5411896](https://console.aws.amazon.com/ec2/home?region=ap-southeast-2#launchAmi=ami-f5411896) |
-| ap-northeast-1   | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-0cc2e162](https://console.aws.amazon.com/ec2/home?region=ap-northeast-1#launchAmi=ami-0cc2e162) |
-| sa-east-1        | Spinnaker-Ubuntu-14.04-11  | 14.04 LTS        | HVM             | [ami-3a2c9656](https://console.aws.amazon.com/ec2/home?region=sa-east-1#launchAmi=ami-3a2c9656)      |
-
+| Region          | Name                      | Ubuntu Version  | Instance Type  | AMI ID                                                                                               |
+|-----------------|---------------------------|-----------------|----------------|--------------                                                                                        |
+| us-east-1       | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-7c9bdd16](https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-7c9bdd16)      |
+| us-west-1       | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-7f78111f](https://console.aws.amazon.com/ec2/home?region=us-west-1#launchAmi=ami-7f78111f)      |
+| us-west-2       | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-b86675d9](https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-b86675d9)      |
+| eu-west-1       | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-fae44089](https://console.aws.amazon.com/ec2/home?region=eu-west-1#launchAmi=ami-fae44089)      |
+| eu-central-1    | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-758f9d19](https://console.aws.amazon.com/ec2/home?region=eu-central-1#launchAmi=ami-758f9d19)   |
+| ap-southeast-1  | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-081cdd6b](https://console.aws.amazon.com/ec2/home?region=ap-southeast-1#launchAmi=ami-081cdd6b) |
+| ap-southeast-2  | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-01abf262](https://console.aws.amazon.com/ec2/home?region=ap-southeast-2#launchAmi=ami-01abf262) |
+| ap-northeast-1  | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-6f5b7601](https://console.aws.amazon.com/ec2/home?region=ap-northeast-1#launchAmi=ami-6f5b7601) |
+| sa-east-1       | Spinnaker-Ubuntu-14.04-10 | 14.04 LTS       | HVM            | [ami-3b820757](https://console.aws.amazon.com/ec2/home?region=sa-east-1#launchAmi=ami-3b820757)      |

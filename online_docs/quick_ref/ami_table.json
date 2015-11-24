@@ -1,0 +1,13 @@
+{
+    "hvm": {
+        "ap-northeast-1": "ami-6f5b7601", 
+        "ap-southeast-1": "ami-081cdd6b", 
+        "ap-southeast-2": "ami-01abf262", 
+        "eu-central-1": "ami-758f9d19", 
+        "eu-west-1": "ami-fae44089", 
+        "sa-east-1": "ami-3b820757", 
+        "us-east-1": "ami-7c9bdd16", 
+        "us-west-1": "ami-7f78111f", 
+        "us-west-2": "ami-b86675d9"
+    }
+}
