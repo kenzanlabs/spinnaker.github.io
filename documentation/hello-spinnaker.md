@@ -73,8 +73,7 @@ $ sudo su - jenkins
 $ sudo apt-get install software-properties-common
 $ sudo apt-add-repository ppa:brightbox/ruby-ng
 $ sudo apt-get update
-$ sudo apt-get install ruby2.2
-$ sudo apt-get install ruby2.2-dev
+$ sudo apt-get install ruby2.2 ruby2.2-dev zlib1g-dev
 $ sudo gem install bundler
 ~~~
 now install the deb-s3 gem globally
