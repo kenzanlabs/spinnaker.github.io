@@ -9,6 +9,7 @@
   children:
     - getting_started
     - hello_world
+    - source_to_prod_codelab
     - developer_guide
     - properties
     - faq
