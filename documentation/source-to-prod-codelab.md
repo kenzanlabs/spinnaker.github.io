@@ -18,7 +18,7 @@ In this codelab, you will create a cohesive workflow which takes source code and
 
 You will be using a custom-built image that includes sample application source code, a Jenkins instance, a Debian repository (aptly) and a Spinnaker instance.
 
-This codelab runs specifically on the Google Cloud Platform, and requires a billing-enabled GCP project.
+This codelab is an extension of the [Hello World Deployment](http://spinnaker.io/documentation/hello-spinnaker.html) tutorial. It runs specifically on the Google Cloud Platform, and requires a billing-enabled GCP project.
 
 ## Part 0: Environment Setup
 
