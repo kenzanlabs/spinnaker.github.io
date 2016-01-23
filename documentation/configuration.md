@@ -61,9 +61,21 @@ The `spinnaker.yml` file defines two hierarchies of properties (described later)
 neither of which are directly used to configure the microservice subsystems.
 Rather these are used for those system configurations to explicitly
 acknowledge how and where they are using the standard configuration values, since
-they always include the `spinnaker.yml`. In other words, you can completely
-rewrite the *system*`.yml` files and forget about `spinnaker.yml`, however this
-will become tedious to maintain in a consistent way.
+they always include the `spinnaker.yml`.
+
+For example:
+
+<table>
+<tr><th>spinnaker.yml<th>clouddriver.yml
+<tr><td><pre>services:
+   clouddriver:
+      port: 7002
+</pre>
+<td><pre>port: ${services.clouddriver.port}</pre>
+</table>
+
+You can completely rewrite the *system*`.yml` files and forget about `spinnaker.yml`,
+however this will become tedious to maintain in a consistent way.
 
 ### About the different YAML files
 
@@ -209,8 +221,7 @@ Rosco implements Spinnaker's bakery. Most of the configuration is pulled from
 
 **rush.yml**
 
-Rush provides support for the bakery.
-
+Rush provides support for Rosco, Spinnaker's bakery.
 
 ## Additional configuration files
 
