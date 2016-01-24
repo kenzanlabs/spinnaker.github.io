@@ -8,6 +8,15 @@ lang: en
 * Table of contents. This line is required to start the list.
 {:toc}
 
+# What is this document about?
+
+See [Custom Configuring a Spinnaker Deployment](configuration.html) for a
+discussion of Spinnaker configuration as presented by Spinnaker.
+
+This document is an alternative perspective from the Spring implementation
+point of view.
+
+
 # How do I configure Spinnaker?
 
 When you setup Spinnaker according to direction at this site, you will get a set of [configuration files](https://github.com/spinnaker/spinnaker/tree/master/config). Spinnaker comes with `spinnaker.yml`, `spinnaker-local.yml`, and a `<module>.yml` file (for each module), intent on simplifying configuration.

@@ -131,6 +131,17 @@ take note of the auto-generated Project ID (e.g. *powerful-surf-12345*).
     Autoscaler](https://console.developers.google.com/apis/api/autoscaler/overview?project=_)
     APIs.
 
+2. Obtain service account credentials.
+  * This step is only required to manage your GCP project from Spinnaker
+    running outside that project (e.g. Spinnaker is running on AWS or in a
+    different GCP project).
+  * Go to the Credentials tab on the API Management page.
+  * Select the **Service account key** item from the **New credentials** menu.
+  * Select a service account, the **JSON** key type, and click **Create**.
+  * Safeguard the JSON file that your browser will download. We will later
+    copy this into your Spinnaker deployment so that it can manage your
+    GCP project.
+
 ## Step 2: Set up a Spinnaker instance
 
 In this step, you'll set up an instance of Spinnaker on AWS, GCP or on a local host.
