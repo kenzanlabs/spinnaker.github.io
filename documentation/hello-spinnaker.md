@@ -36,7 +36,7 @@ $ sudo apt-get install openjdk-7-jdk
 $ wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
 $ sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
 $ sudo apt-get update
-$ sudo apt-get install jenkins
+$ sudo apt-get install jenkins git
 $ sudo service jenkins start
 ~~~
 
@@ -73,8 +73,7 @@ $ sudo su - jenkins
 $ sudo apt-get install software-properties-common
 $ sudo apt-add-repository ppa:brightbox/ruby-ng
 $ sudo apt-get update
-$ sudo apt-get install ruby2.2
-$ sudo apt-get install ruby2.2-dev
+$ sudo apt-get install ruby2.2 ruby2.2-dev zlib1g-dev
 $ sudo gem install bundler
 ~~~
 now install the deb-s3 gem globally
