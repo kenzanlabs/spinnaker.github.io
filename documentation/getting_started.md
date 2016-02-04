@@ -142,10 +142,20 @@ take note of the auto-generated Project ID (e.g. *powerful-surf-12345*).
     copy this into your Spinnaker deployment so that it can manage your
     GCP project.
 
+### Cloud Foundry Platform Setup
+
+If you'd like to have Spinnaker deploy to and manage applications on either Pivotal's public facing PWS or on your own Cloud Foundry setup, you'll need to have an account setup. If you've already got one, please skip to the next step. Otherwise, please follow the instructions below.
+
+1. Sign into [Pivotal Web Services](http://run.pivotal.io/) or your local instance of Cloud Foundry.
+2. In your organization, create a new space. 
+  * Note your organization name and space name.
+
 ## Step 2: Set up a Spinnaker instance
 
 In this step, you'll set up an instance of Spinnaker on AWS, GCP or on a local host.
 We strongly recommend using a machine with 8 cores and at least 50GB RAM.
+
+> **NOTE:** More modifications are being worked on to support running Spinnaker on Cloud Foundry. For now, follow the steps to run it locally.
 
 ### AWS Setup
 
@@ -256,6 +266,11 @@ the **Continue** button.
 You can find the specific command in the **Suggest next steps** screen that appears.
   * Spinnaker may take a few minutes to configure itself. We suggest giving your instance 3-5 minutes
     for post-configurations to complete.
+
+### Cloud Foundry Platform Setup
+
+At this stage, you should either run an AWS-installed, GCP-installed, or locally installed version of 
+Spinnaker per instructions above. (Running Spinnaker inside CF is coming soon.)
 
 ### Running Spinnaker on a host not on AWS or GCP
 
