@@ -1,13 +1,13 @@
 {
     "HVM": {
-        "ap-northeast-1": "ami-564b7538",
-        "ap-southeast-1": "ami-98408cfb",
-        "ap-southeast-2": "ami-56bd9835",
-        "eu-central-1": "ami-19c2db75",
-        "eu-west-1": "ami-e1bc0992",
-        "sa-east-1": "ami-9531b0f9",
-        "us-east-1": "ami-2eb39544",
-        "us-west-1": "ami-ef82f68f",
-        "us-west-2": "ami-62a34702"
+        "ap-northeast-1": "ami-6a696d04", 
+        "ap-southeast-1": "ami-e6d51b85", 
+        "ap-southeast-2": "ami-73517610", 
+        "eu-central-1": "ami-b26d76de", 
+        "eu-west-1": "ami-a9c070da", 
+        "sa-east-1": "ami-83db58ef", 
+        "us-east-1": "ami-1d230877", 
+        "us-west-1": "ami-81a2d4e1", 
+        "us-west-2": "ami-4b35d42b"
     }
 }
