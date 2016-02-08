@@ -170,7 +170,7 @@ Create an AWS virtual machine.
 * Goto [AWS Console](https://console.aws.amazon.com) > EC2.
 * Click **Launch Instance**.
 * Click **Community AMIs** then
-* If the default region where your resources were allocated in [Step 1](#step-1-set-up-your-target-deployment-environment) is <code>us-west-2</code>, click **Select** for the **Spinnaker-Ubuntu-14.04-20 - [ami-62a34702](https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-62a34702)** image. Otherwise, consult {% include link.to id="ami_table" text="this region-to-AMI mapping table" %} to identify an appropriate image to use.
+* If the default region where your resources were allocated in [Step 1](#step-1-set-up-your-target-deployment-environment) is <code>us-west-2</code>, click **Select** for the **Spinnaker-Ubuntu-14.04-22 - [ami-4b35d42b](https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-4b35d42b)** image. Otherwise, consult {% include link.to id="ami_table" text="this region-to-AMI mapping table" %} to identify an appropriate image to use.
 * Under **Step 2: Choose an Instance Type**, click the radio button
   for **m4.xlarge**, then click **Next: Configure Instance Details**.
 * Set the **Auto-assign Public IP** field to **Enable**, and the **IAM
