@@ -148,7 +148,7 @@ If you'd like to have Spinnaker deploy to and manage applications on either Pivo
 
 1. Sign into [Pivotal Web Services](http://run.pivotal.io/) or your local instance of Cloud Foundry.
 2. In your organization, create a new space. 
-  * Note your organization name and space name.
+  * Note your organization name and space name to use in spinnaker-local.yml settings.
 
 ## Step 2: Set up a Spinnaker instance
 
