@@ -101,4 +101,4 @@ The navigation supports two levels (main and dropdown) currently. All ordering i
 
 TODO: 
 - make classes more obvious in API docs
-- footer copyright
+- footer copyright.
