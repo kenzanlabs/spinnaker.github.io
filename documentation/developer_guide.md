@@ -8,18 +8,18 @@ lang: en
 * Table of contents. This line is required to start the list.
 {:toc}
 
-#Developer's Guide
+# Developer's Guide
 
 This is a preliminary guide for developers. Please check back soon as
 we plan to update it in the coming weeks.
 
-##Installation
+## Installation
 
 Please follow the README instructions in the [Spinnaker GitHub
 repo](https://www.github.com/spinnaker/spinnaker) to install (and
 run!) Spinnaker from source code.
 
-##Spinnaker Components
+## Spinnaker Components
 
 Spinnaker is composed of the following micro services:
 
