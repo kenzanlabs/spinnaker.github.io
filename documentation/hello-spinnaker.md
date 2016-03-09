@@ -8,7 +8,7 @@ lang: en
 * Table of contents. This line is required to start the list.
 {:toc}
 
-#An Introduction to Spinnaker: Hello Deployment
+# An Introduction to Spinnaker: Hello Deployment
 
 This guide will run through the workflow of setting up an example application deployment with [Spinnaker](http://spinnaker.io/). It assumes you already have Spinnaker up and running on AWS or GCE. A guide for installation can be found [here](http://spinnaker.io/documentation/getting_started.html).
 
@@ -16,14 +16,14 @@ Below is a diagram of the workflow we will setup.
 
 ![diagram](../images/hello-spinnaker/flow.png)
 
-##Setup Jenkins
+## Setup Jenkins
 
 Jenkins is a powerful continuous integration server that allows us to do several important things:
 
 * Poll our Github repository for changes so Spinnaker knows when to run a pipeline.
 * Compile and build our example application into a .deb package so Spinnaker can bake it on an image. Spinnaker expects all applications to be deployed as deb packages.
 
-###Installing Jenkins
+### Installing Jenkins
 
 If you already have a Jenkins server, you can skip this step. However be sure that port 9999 on the server is open to the internet if you plan to host your deb repository there. Also be sure that your Jenkins port is accessible by your Spinnaker instance.
 
@@ -42,7 +42,7 @@ $ sudo service jenkins start
 
 Visit port :8080 on your instance and you should see Jenkins startup and present the dashboard.
 
-###Enable Jenkins API
+### Enable Jenkins API
 
 Spinnaker communicates with Jenkins by using its REST API. However the API is not enabled by default. To enable it we first must enable global security (which is a good idea anyway). Click "Manage Jenkins" then "Configure Global Security". Under Access Control check "Jenkins own database" and "allow users to sign up". Under authorization check "Logged-in users can do anything" and save.
 
@@ -50,11 +50,11 @@ Spinnaker communicates with Jenkins by using its REST API. However the API is no
 
 You will now be presented with a login screen. Click the "Create an account" link to register. Take note of your username and password, Spinnaker will need them later. Now you can turn off allowing users to register as you can add them manually from the control panel. The Jenkins API is now enabled.
 
-###Setup deb repo
+### Setup deb repo
 
 There are several options you can use to setup your private deb repo. This involves leveraging a tool to create the file structure and format for your .deb packages. You will also need to serve them publicly on the internet so they can be installed.
 
-#####deb-s3
+##### deb-s3
 
 [deb-s3](https://github.com/krobertson/deb-s3) is a ruby gem that allows you to create a publish your packages directly to an s3 bucket. The nice part about this is that you do not have to concern yourself with setting up ports or configuring a web server. S3 handles everything for us.
 
@@ -83,7 +83,7 @@ $ sudo gem install deb-s3
 The address of your repo will now be `http://BUCKET-NAME.s3-website-REGION-NAME.amazonaws.com trusty main`
 
 
-####Aptly
+#### Aptly
 
 [Aptly](http://www.aptly.info/) is a tool that easily allows us to manage and publish the packages to the local filesystem. After we install and configure the tool, nginx will host the repository on our jenkins server so it can be consumed during the bake process. Since nginx will run on port 9999 it is important that this port on your Jenkins server will be accessible from the internet.
 
@@ -106,7 +106,7 @@ We will now publish our (currently empty) repo and setup nginx to host it on por
 ~~~
 $ ./aptly publish repo -architectures="amd64" -component=main -distribution=trusty -skip-signing=true hello
 ~~~
-###Setup Nginx to serve aptly deb repo
+### Setup Nginx to serve aptly deb repo
 Install and configure nginx
 
 ~~~
@@ -133,11 +133,11 @@ Start nginx `sudo service nginx start`
 
 the address of the repo will be `http://JENKINS-SERVER:9999 trusty main`
 
-###Fork example application
+### Fork example application
 
 We have set up an example application with a gradle.build ready to package your app for spinnaker deployment. Fork [https://github.com/kenzanlabs/hello-karyon-rxnetty](https://github.com/kenzanlabs/hello-karyon-rxnetty) via the github UI so you can make changes and see them flow through the Spinnaker pipeline.
 
-###Create Jenkins Jobs
+### Create Jenkins Jobs
 
 We will now setup our 3 jenkins jobs for spinnaker to use.
 
@@ -165,7 +165,7 @@ This job will be responsible for building and publishing our package, along with
 
 ![diagram](../images/hello-spinnaker/build.png)
 
-##Configure Spinnaker
+## Configure Spinnaker
 
 SSH to your Spinnaker instance by tunneling the needed ports. Tunneling ensures that Spinnaker is not accessible from the internet outside of your ssh connection. This is **very important** because anyone who has access to Spinnaker can do anything your cloud account can do.
 
@@ -181,7 +181,7 @@ ssh -i yourkey.pem -L 9000:127.0.0.1:9000 -L 8084:127.0.0.1:8084 -L 8087:127.0.0
 
 Spinnaker will be accessible on [http://localhost:9000](http://localhost:9000).
 
-###Jenkins Integration
+### Jenkins Integration
 
 Before we can begin setting up our workflow, we need to edit the Spinnaker configuration to allow it to communicate with our Jenkins server.
 
@@ -210,7 +210,7 @@ igor:
     enabled: true
 ~~~
 
-###Deb Repository
+### Deb Repository
 
 The last configuration step is to add our deb repository address to the Rosco config. When Spinnaker is baking the application image, it will add this address to the sources list so it can `apt-get install` the deb package. For this reason it is important that port 9000 is open on our Jenkins server which hosts the repo.
 
@@ -224,7 +224,7 @@ debianRepository: http://BUCKET-NAME.s3-website-REGION-NAME.amazonaws.com trusty
 ~~~
 We can now start Spinnaker and start configuring our workflow. `# start spinnaker`
 
-##Create Spinnaker application and resources
+## Create Spinnaker application and resources
 
 The concept of an application allows us to group our resources and pipelines in a logical way. This makes it easy to manage our app in a single place instead of searching for items buried in menus.
 
@@ -233,7 +233,7 @@ The concept of an application allows us to group our resources and pipelines in 
 
 ![create](../images/hello-spinnaker/create.png)
 
-###Create security group
+### Create security group
 
 Now we will create a security group to allow access to our application. Spinnaker only allows you to attach ingress sources based on another security group, so we first must create a base security group via the aws console to allow traffic on port 8080.
 
@@ -247,13 +247,13 @@ Select our group as ingress source
 
 ![group1](../images/hello-spinnaker/group3.png)
 
-###Create load balancer
+### Create load balancer
 
 The load balancer will be the entry-point to our application scaling group. Click the load balancers tab and add it.
 
 ![group1](../images/hello-spinnaker/group4.png)
 
-##Setup Spinnaker Pipeline
+## Setup Spinnaker Pipeline
 
 We now have the necessary resources to begin pipeline creation. A pipeline is a group of actions that handle the complete lifecycle of our deployment. It is also a great centralized place to monitor the status of each stage instead of hopping between jenkins or the aws console.
 
@@ -261,25 +261,25 @@ Our pipeline is triggered by polling our Jenkins server to see if our code has u
 
 Click the pipelines tab and add a new pipeline.
 
-###Pipeline trigger
+### Pipeline trigger
 
 Add a trigger and select "jenkins job" then we can select our jenkins server and choose the "hello poll" job. Spinnaker will poll jenkins for a successful run of this job. We know that if it ran then there is new code to deploy from github
 
 ![group1](../images/hello-spinnaker/pipe1.png)
 
-###Build and package stage
+### Build and package stage
 
 The first stage in our pipeline will be to build and package our app. This also published our deb to our repository for baking. Choose Jenkins for type and select our "hello build" job.
 
 ![group1](../images/hello-spinnaker/pipe2.png)
 
-###Bake stage
+### Bake stage
 
 The next stage will bake our application. "Baking" refers to booting up an instance, installing our application package, and saving the os image for launching. All of this is handled by [packer](http://packer.io). Because our build stage returns the name of our deb artifact and knows our repo address, we simply need to select the region(s) and add our application package name. We can also take advantage of the async features of spinnaker and do a multi-region bake.
 
 ![group1](../images/hello-spinnaker/bake.png)
 
-###Deploy stage
+### Deploy stage
 
 Spinnaker will automatically pass our baked image id to the deploy stage. This is where we set up our server group to be deployed to a cluster.
 
@@ -297,7 +297,7 @@ Choose two instances so we can be sure they our load balanced correctly. Our app
 
 ![group1](../images/hello-spinnaker/pipe7.png)
 
-##Triggering the pipeline
+## Triggering the pipeline
 
 We can trigger our pipeline several ways. The first way is to simply push to our github repo. Jenkins will detect this and run our polling job, which Spinnaker will detect and kick off our pipeline.
 
