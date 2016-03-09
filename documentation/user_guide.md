@@ -8,15 +8,15 @@ lang: en
 * Table of contents. This line is required to start the list.
 {:toc}
 
-#User Guide
+# User Guide
 
-##Starting Spinnaker
+## Starting Spinnaker
 
-##Understanding the Clusters View
+## Understanding the Clusters View
 
-##Working with Pipelines
+## Working with Pipelines
 
-##Deployment Strategies
+## Deployment Strategies
 
 Deployment strategies are specialized pipelines that are bound to the deploy stage of an execution. They can be selected as strategies when defining the deploy stage of a standard pipeline or via clone server group action in the clusters view.
 
