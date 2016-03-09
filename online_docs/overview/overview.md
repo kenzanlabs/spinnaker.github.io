@@ -43,7 +43,7 @@ machines running software.
 * **Load Balancer**: A *Load Balancer* is associated with an ingress
     protocol and port range, and balances traffic among instances in
     the corresponding Server Group. Optionally, you can enable health
-    checks for a load balancer, with flexiblity to define health
+    checks for a load balancer, with flexibility to define health
     criteria and specify the health check endpoint.
 * **Cluster**: A *Cluster* is a user-defined, logical grouping of
     Server Groups in Spinnaker.

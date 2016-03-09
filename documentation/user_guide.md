@@ -8,19 +8,19 @@ lang: en
 * Table of contents. This line is required to start the list.
 {:toc}
 
-#User Guide
+# User Guide
 
-##Starting Spinnaker
+## Starting Spinnaker
 
-##Understanding the Clusters View
+## Understanding the Clusters View
 
-##Working with Pipelines
+## Working with Pipelines
 
-##Deployment Strategies
+## Deployment Strategies
 
 Deployment strategies are specialized pipelines that are bound to the deploy stage of an execution. They can be selected as strategies when defining the deploy stage of a standard pipeline or via clone server group action in the clusters view.
 
-To use a deployment strategy, select 'custom' in the strategy dropdown. Then, select the strategy by name and fill in the appropiate parameters if needed.
+To use a deployment strategy, select 'custom' in the strategy dropdown. Then, select the strategy by name and fill in the appropriate parameters if needed.
 
 To define a new deployment strategy, go to the Pipelines tab and click on the Configure... dropdown. Select 'create new' and set the type to be 'strategy'. Click on save to edit your strategy. 
 
