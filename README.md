@@ -48,7 +48,7 @@ New pages can be placed anywhere, though the directory structure determines thei
 
 To make a new page, just
 1. Create a new yourpagename.md file in an appropriate location
-2. Add the recomended [front matter](http://jekyllrb.com/docs/frontmatter/ "Front Matter") (listed below), 3. Add it to the navigation in `_data/navigation.yml`, likely by its `id` (see below)
+2. Add the recommended [front matter](http://jekyllrb.com/docs/frontmatter/ "Front Matter") (listed below), 3. Add it to the navigation in `_data/navigation.yml`, likely by its `id` (see below)
 4. Add any content you want. You can break the page into pieces and use [includes](http://jekyllrb.com/docs/templates/#tags "Includes") and all the other gh-pages supported jekyll features as usual.
 
 ### Front Matter for New Pages
@@ -81,7 +81,7 @@ You can use triple tildes (~~~) with the language specified and your code will b
 The following general language types are available, and have distinct highlighting:
 - default: specify any language other than the ones below (e.g. `js`, `css`, `html`, etc.).
 - `shell`/`sh`/`bash`: terminal colors (green on black).
-- `output`: a dark variant of the default highlighting theme so you can follow a user input examle with the server's response and have a contrasting but familiar theme. It attemps to autodetect language via the code prettify library, so you don't need to specify one.
+- `output`: a dark variant of the default highlighting theme so you can follow a user input example with the server's response and have a contrasting but familiar theme. It attempts to autodetect language via the code prettify library, so you don't need to specify one.
 
 Quick Vertical Spacer
 ---------------------
